@@ -10,8 +10,8 @@ import (
 
 	"cloud.google.com/go/bigquery"
 	"github.com/google/go-cmp/cmp"
-	"go.einride.tech/protobuf-bigquery/encoding/protobq"
-	publicv1 "go.einride.tech/protobuf-bigquery/internal/examples/proto/gen/go/einride/bigquery/public/v1"
+	"github.com/roryq/protobuf-bigquery-go/encoding/protobq"
+	publicv1 "github.com/roryq/protobuf-bigquery-go/internal/examples/proto/gen/go/einride/bigquery/public/v1"
 	"google.golang.org/api/iterator"
 	"google.golang.org/genproto/googleapis/example/library/v1"
 	"google.golang.org/protobuf/encoding/prototext"

@@ -17,7 +17,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
-	"go.einride.tech/protobuf-bigquery/internal/wkt"
+	"github.com/roryq/protobuf-bigquery-go/internal/wkt"
 )
 
 // Unmarshal the bigquery.Value map into the given proto.Message.
