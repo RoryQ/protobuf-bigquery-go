@@ -6,7 +6,6 @@ import (
 
 	"cloud.google.com/go/bigquery"
 	"cloud.google.com/go/civil"
-	"go.einride.tech/protobuf-bigquery/internal/wkt"
 	"google.golang.org/genproto/googleapis/type/date"
 	"google.golang.org/genproto/googleapis/type/datetime"
 	"google.golang.org/genproto/googleapis/type/latlng"
@@ -17,6 +16,8 @@ import (
 	"google.golang.org/protobuf/types/known/structpb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
+
+	"go.einride.tech/protobuf-bigquery/internal/wkt"
 )
 
 // Unmarshal the bigquery.Value map into the given proto.Message.
@@ -562,6 +563,9 @@ func (o UnmarshalOptions) unmarshalStringValue(bqValue bigquery.Value) (*wrapper
 	if bqValue, ok := bqValue.(string); ok {
 		return wrapperspb.String(bqValue), nil
 	}
+	if bqValue, ok := bqValue.(fmt.Stringer); ok {
+		return wrapperspb.String(bqValue.String()), nil
+	}
 	return nil, fmt.Errorf("invalid BigQuery value for %s: %#v", wkt.StringValue, bqValue)
 }
 
@@ -615,6 +619,10 @@ func (o UnmarshalOptions) unmarshalScalar(
 	case protoreflect.StringKind:
 		if s, ok := bqValue.(string); ok {
 			return protoreflect.ValueOfString(s), nil
+		}
+
+		if s, ok := bqValue.(fmt.Stringer); ok {
+			return protoreflect.ValueOfString(s.String()), nil
 		}
 
 	case protoreflect.BytesKind:
